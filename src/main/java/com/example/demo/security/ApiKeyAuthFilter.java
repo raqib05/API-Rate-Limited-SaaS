@@ -22,6 +22,12 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     ApiKeyService apiKeyService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.startsWith("/test")
+                || path.startsWith("/actuator");
+    }
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     jakarta.servlet.FilterChain filterChain)
