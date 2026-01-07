@@ -1,13 +1,12 @@
-package service;
+package com.example.demo.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import model.ApiKey;
-import model.Plan;
-import model.Tenant;
-import model.User;
+import com.example.demo.model.Plan;
+import com.example.demo.model.Tenant;
+import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
-import repository.TenantRepository;
+import com.example.demo.repository.TenantRepository;
 
 import java.util.List;
 import java.util.Optional;

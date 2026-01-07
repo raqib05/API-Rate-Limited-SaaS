@@ -1,11 +1,11 @@
-package service;
+package com.example.demo.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import model.ApiKey;
-import model.Tenant;
+import com.example.demo.model.ApiKey;
+import com.example.demo.model.Tenant;
 import org.springframework.stereotype.Service;
-import repository.ApiKeyRepository;
+import com.example.demo.repository.ApiKeyRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Optional;
@@ -45,5 +45,8 @@ public class ApiKeyService {
             apiKey.setRevoked(true);
             apiKeyRepository.save(apiKey);
         }
+    }
+    public Optional<ApiKey> findByKeyHash(String keyHash){
+        return apiKeyRepository.findByKeyHash(keyHash);
     }
 }
