@@ -1,10 +1,8 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
-import jakarta.persistence.Table;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -16,7 +14,9 @@ public class ApiKey {
         System.out.println(">>> ApiKey ENTITY LOADED");
     }
     @Id
+    @GeneratedValue
     UUID id;
+
     String keyHash;
 
     @ManyToOne

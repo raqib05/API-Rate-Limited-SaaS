@@ -1,9 +1,11 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,10 +20,12 @@ public class Tenant {
     String name;
 
     @OneToMany(mappedBy = "tenant")
-    List<User> users;
+    @JsonIgnore
+    List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "tenant")
-    List<ApiKey> apiKeys;
+    @JsonIgnore
+    List<ApiKey> apiKeys = new ArrayList<>();
 
     @ManyToOne(optional = false)
     Plan plan;
