@@ -1,14 +1,15 @@
-package security;
+package com.example.demo.security;
 
+import com.example.demo.service.ApiKeyService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import model.ApiKey;
+import com.example.demo.model.ApiKey;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import repository.ApiKeyRepository;
+import com.example.demo.repository.ApiKeyRepository;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -18,8 +19,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ApiKeyAuthFilter extends OncePerRequestFilter {
 
-    private final ApiKeyRepository apiKeyRepository;
+    ApiKeyService apiKeyService;
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.startsWith("/test")
+                || path.startsWith("/actuator");
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -35,7 +42,7 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
         }
 
         String hash = DigestUtils.sha256Hex(key);
-        Optional<ApiKey> result = apiKeyRepository.findByKeyHash(hash);
+        Optional<ApiKey> result = apiKeyService.findByKeyHash(hash);
 
         if (result.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
